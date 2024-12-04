@@ -1,5 +1,6 @@
 use std::error::Error;
 use std::fs;
+use std::num::ParseIntError;
 
 pub fn read_from_file_to_string(rel_path: String) -> Result<String, Box<dyn Error>> {
     let cur_dir_blah = std::env::current_dir()?;
@@ -35,6 +36,25 @@ pub fn read_from_file_to_number_tuples(
             let y = v[1].parse::<i32>()?;
 
             Ok((x, y))
+        })
+        .collect();
+
+    parsed
+}
+
+pub fn read_from_file_to_number_matrix(rel_path: String) -> Result<Vec<Vec<i32>>, Box<dyn Error>> {
+    let file_contents = read_from_file_to_string(rel_path)?;
+    let spl = file_contents.split("\n");
+    let n = spl.clone().count();
+    let parsed: Result<Vec<Vec<i32>>, Box<dyn Error>> = spl
+        .take(n - 1)
+        .map(|s| {
+            let v: Result<Vec<i32>, Box<dyn Error>> = s
+                .split_whitespace()
+                .map(|x| Ok(x.parse::<i32>()?))
+                .collect();
+
+            v
         })
         .collect();
 
