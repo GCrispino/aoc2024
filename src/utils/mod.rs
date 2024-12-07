@@ -42,6 +42,21 @@ pub fn read_from_file_to_number_tuples(
     parsed
 }
 
+pub fn read_from_file_to_string_list(rel_path: String) -> Result<Vec<String>, Box<dyn Error>> {
+    let file_contents = read_from_file_to_string(rel_path)?;
+    let spl = file_contents.split("\n");
+    let n = spl.clone().count();
+    let parsed: Vec<String> = spl
+        .take(n - 1)
+        .map(|s| {
+            let v: String = s.split_whitespace().map(|x| x.to_string()).collect();
+            v
+        })
+        .collect();
+
+    Ok(parsed)
+}
+
 pub fn read_from_file_to_number_matrix(rel_path: String) -> Result<Vec<Vec<i32>>, Box<dyn Error>> {
     let file_contents = read_from_file_to_string(rel_path)?;
     let spl = file_contents.split("\n");
