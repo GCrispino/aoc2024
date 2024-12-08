@@ -1,6 +1,8 @@
 use std::error::Error;
 use std::fs;
 
+pub mod types;
+
 pub fn read_from_file_to_string(rel_path: String) -> Result<String, Box<dyn Error>> {
     let cur_dir_blah = std::env::current_dir()?;
     let cur_dir_opt = cur_dir_blah.to_str();
