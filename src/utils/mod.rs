@@ -1,6 +1,5 @@
 use std::error::Error;
 use std::fs;
-use std::num::ParseIntError;
 
 pub fn read_from_file_to_string(rel_path: String) -> Result<String, Box<dyn Error>> {
     let cur_dir_blah = std::env::current_dir()?;
@@ -14,7 +13,6 @@ pub fn read_from_file_to_string(rel_path: String) -> Result<String, Box<dyn Erro
     let cur_dir = cur_dir_res?;
 
     let input_path = format!("{}/src/days/{}", cur_dir, rel_path);
-    println!("{}", input_path.clone());
 
     let res = fs::read_to_string(input_path)?;
 
